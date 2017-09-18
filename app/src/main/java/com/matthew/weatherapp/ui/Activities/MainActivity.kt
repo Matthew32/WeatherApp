@@ -15,6 +15,7 @@ import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
 import com.matthew.weatherapp.ui.utils.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.forecast.*
 import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
@@ -53,13 +54,7 @@ class MainActivity : AppCompatActivity() {
         doAsync {
             val result = RequestForecastCommand("94043").execute();
             uiThread {
-                forecastList.adapter = ForecastListAdapter(result, object : OnItemClickListener {
-                    override fun invoke(forecast: Forecast) {
-                        toast(forecast.date);
-                    }
-
-
-                });
+                forecastList.adapter = ForecastListAdapter(result) { forecast -> toast(forecast.date) };
 
             }
 
@@ -73,6 +68,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addExample2(x: Int, y: Int): Int = x + y;
+    //code for x version example
+
+    inline fun supportsLollipop(code: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            code();
+
+        }
+    }
 
 //    fun toast(message: String, length: Int = Toast.LENGTH_SHORT) {
 //        Toast.makeText(this, message, length).show();
