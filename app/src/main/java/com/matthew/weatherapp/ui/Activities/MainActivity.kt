@@ -15,7 +15,7 @@ import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
 import com.matthew.weatherapp.ui.utils.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.forecast.*
+import kotlinx.android.synthetic.main.forecast_list.*
 import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var forecastList: RecyclerView = find(R.id.forecast_list); // thanks to the anko plugin we can set the id with no to much code
         forecastList.layoutManager = LinearLayoutManager(this);
         // forecastList.adapter = ForecastListAdapter(weekForecast);
 
@@ -35,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 //        niceToast(message = "d", length = 5);// declare methods variable right here
 //
 //        toast("COSA", Toast.LENGTH_LONG);
-        val url = "http://api.openweathermap.org/data/2.5/forecast/daily?" +
+        val url = "http://api.openweathermap.org/data/2.5/forecast_list/daily?" +
                 "APPID=15646a06818f61f7b8d7823ca833e1ce&q=94043&mode=json&units=metric&cnt=7"
         //make asyntask
         doAsync {
