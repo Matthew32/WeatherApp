@@ -1,4 +1,4 @@
-package com.matthew.weatherapp.domain
+package com.matthew.weatherapp.domain.mappers
 
 import android.icu.text.DateFormat
 import android.os.Build
@@ -32,9 +32,10 @@ class ForecastDataMapper {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun convertForecastItemToDomain(forecast: Forecast): ModelForecast {
-        return ModelForecast(convertDate(forecast.dt), forecast.weather[0].description, forecast.temp.max.toInt(), forecast.temp.min.toInt());
+        return ModelForecast(convertDate(forecast.dt), forecast.weather[0].description, forecast.temp.max.toInt(), forecast.temp.min.toInt(), generateIconUrl(forecast.weather[0].icon));
 
     }
+
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun convertDate(date: Long): String {
@@ -42,4 +43,7 @@ class ForecastDataMapper {
         return df.format(date);
 
     }
+
+    private fun generateIconUrl(icon: String): String = "http://openweather.org/img/w/$icon.png"
+
 }

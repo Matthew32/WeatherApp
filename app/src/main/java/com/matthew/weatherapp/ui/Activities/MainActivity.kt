@@ -10,12 +10,12 @@ import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import com.matthew.weatherapp.ui.Adapters.ForecastListAdapter
 import com.matthew.weatherapp.R
+import com.matthew.weatherapp.domain.model.Forecast
+//import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
+import com.matthew.weatherapp.ui.utils.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.find
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
     private val items = listOf("Mon 6/23 - Sunny 31/17", "Tue 6/24 - Foggy - 21/8", "Wed 6/25 - Cloudy - 22/17", "Thurs 6/26 - Rainy - 18/11", "Fri 6/27 - Foggy - 21/10", "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18", "Sun 6/29 - Sunny - 20/7")
@@ -29,11 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         message.text = "dddd"; // change  TextView Text
         toast("ASDF"); // methods
-        niceToast("COSA", "TAG"); // two parameters
-        niceToast("COSA"); // only one parameter
-        niceToast(message = "d", length = 5);// declare methods variable right here
-
-        toast("COSA", Toast.LENGTH_LONG);
+//        niceToast("COSA", "TAG"); // two parameters
+//        niceToast("COSA"); // only one parameter
+//        niceToast(message = "d", length = 5);// declare methods variable right here
+//
+//        toast("COSA", Toast.LENGTH_LONG);
         val url = "http://api.openweathermap.org/data/2.5/forecast/daily?" +
                 "APPID=15646a06818f61f7b8d7823ca833e1ce&q=94043&mode=json&units=metric&cnt=7"
         //make asyntask
@@ -53,7 +53,14 @@ class MainActivity : AppCompatActivity() {
         doAsync {
             val result = RequestForecastCommand("94043").execute();
             uiThread {
-                forecastList.adapter = ForecastListAdapter(result);
+                forecastList.adapter = ForecastListAdapter(result, object : OnItemClickListener {
+                    override fun invoke(forecast: Forecast) {
+                        toast(forecast.date);
+                    }
+
+
+                });
+
             }
 
         }
@@ -67,11 +74,11 @@ class MainActivity : AppCompatActivity() {
 
     fun addExample2(x: Int, y: Int): Int = x + y;
 
-    fun toast(message: String, length: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(this, message, length).show();
-    }
-
-    fun niceToast(message: String, tag: String = MainActivity::class.java.simpleName, length: Int = Toast.LENGTH_SHORT) {
-        Toast.makeText(this, "[$tag]  $message", length).show();
-    }
+//    fun toast(message: String, length: Int = Toast.LENGTH_SHORT) {
+//        Toast.makeText(this, message, length).show();
+//    }
+//
+//    fun niceToast(message: String, tag: String = MainActivity::class.java.simpleName, length: Int = Toast.LENGTH_SHORT) {
+//        Toast.makeText(this, "[$tag]  $message", length).show();
+//    }
 }
