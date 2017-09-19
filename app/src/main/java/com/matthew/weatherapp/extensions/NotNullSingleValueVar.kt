@@ -1,4 +1,4 @@
-package com.matthew.weatherapp.ui
+package com.matthew.weatherapp.extensions
 
 import kotlin.reflect.KProperty
 

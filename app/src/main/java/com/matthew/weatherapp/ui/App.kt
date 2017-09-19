@@ -1,8 +1,7 @@
 package com.matthew.weatherapp.ui
 
 import android.app.Application
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
+import com.matthew.weatherapp.extensions.NotNullSingleValueVar
 
 /**
  * Created by Matthew on 19/09/2017.
