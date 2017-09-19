@@ -1,6 +1,7 @@
 package com.matthew.weatherapp.ui
 
 import android.app.Application
+import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 /**
@@ -17,6 +18,8 @@ class App : Application() {
     object DelegatesExt {
         fun <T> notNullSingleValue() = NotNullSingleValueVar<T>();
     }
+
+
 
     override fun onCreate() {
         super.onCreate();

@@ -1,5 +1,7 @@
 package com.matthew.weatherapp.ui.Activities
 
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
 import com.matthew.weatherapp.data.Request
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +15,7 @@ import com.matthew.weatherapp.R
 import com.matthew.weatherapp.domain.model.Forecast
 //import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
+import com.matthew.weatherapp.ui.utils.ForecastDbHelper
 import com.matthew.weatherapp.ui.utils.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.forecast_list.*
@@ -61,6 +64,11 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    //examples to call to db 
+    var dbHelper1 = ForecastDbHelper();
+    var dbHelper2 = ForecastDbHelper(this)
+
 
     fun add(x: Int, y: Int): Int {
         return x + y;
