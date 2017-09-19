@@ -1,4 +1,4 @@
-package com.matthew.weatherapp.data
+package com.matthew.weatherapp.data.Server
 
 import android.util.Log
 import java.net.URL

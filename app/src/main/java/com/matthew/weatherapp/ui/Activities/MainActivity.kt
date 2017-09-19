@@ -1,24 +1,17 @@
 package com.matthew.weatherapp.ui.Activities
 
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
-import com.matthew.weatherapp.data.Request
+import com.matthew.weatherapp.data.Server.Request
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.widget.Toast
 import com.matthew.weatherapp.ui.Adapters.ForecastListAdapter
 import com.matthew.weatherapp.R
-import com.matthew.weatherapp.domain.model.Forecast
 //import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
-import com.matthew.weatherapp.ui.utils.ForecastDbHelper
-import com.matthew.weatherapp.ui.utils.OnItemClickListener
+import com.matthew.weatherapp.data.db.ForecastDbHelper
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.forecast_list.*
 import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity() {
@@ -65,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //examples to call to db 
+    //examples to call to db
     var dbHelper1 = ForecastDbHelper();
     var dbHelper2 = ForecastDbHelper(this)
 

@@ -2,7 +2,7 @@ package com.matthew.weatherapp.domain.model
 
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.matthew.weatherapp.data.ForecastRequest
+import com.matthew.weatherapp.data.Server.ForecastRequest
 import com.matthew.weatherapp.domain.mappers.ForecastDataMapper
 
 /**

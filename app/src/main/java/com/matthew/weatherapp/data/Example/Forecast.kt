@@ -1,6 +1,6 @@
-package com.matthew.weatherapp.data
+package com.matthew.weatherapp.data.Example
 
-import java.util.*
+import com.matthew.weatherapp.data.Server.ResponseClasses
 
 /**
  * Created by Matthew on 18/09/2017.

@@ -1,7 +1,8 @@
-package com.matthew.weatherapp.ui.utils
+package com.matthew.weatherapp.data.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.matthew.weatherapp.data.db.tables.DataTables.*
 import com.matthew.weatherapp.ui.App
 import org.jetbrains.anko.db.*
 
@@ -9,7 +10,7 @@ import org.jetbrains.anko.db.*
  * Created by Matthew on 19/09/2017.
  */
 class ForecastDbHelper(ctx: Context = App.instance) :
-        ManagedSQLiteOpenHelper(ctx, ForecastDbHelper.DB_NAME, null, ForecastDbHelper.DB_VERSION) {
+        ManagedSQLiteOpenHelper(ctx, DB_NAME, null, DB_VERSION) {
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -37,26 +38,6 @@ class ForecastDbHelper(ctx: Context = App.instance) :
         val instance by lazy { ForecastDbHelper() }
     }
 
-
-    object CityForecastTable {
-        val NAME = "CityForecast";
-        val ID = "_id";
-        val CITY = "city";
-        val COUNTRY = "country";
-
-    }
-
-    object DayForecastTable {
-
-        val NAME = "DayForecast";
-        val ID = "_id";
-        val DATE = "date";
-        val DESCRIPTION = "Description";
-        val HIGH = "high";
-        val LOW = "low";
-        val ICON_URL = "iconUrl";
-        val CITY_ID = "cityId";
-    }
 
 //    public fun <T> use(f: SQLiteDatabase.() -> T): T {
 //        try {

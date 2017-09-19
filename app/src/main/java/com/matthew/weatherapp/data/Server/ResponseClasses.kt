@@ -1,4 +1,6 @@
-package com.matthew.weatherapp.data
+package com.matthew.weatherapp.data.Server
+
+import com.matthew.weatherapp.data.Example.Forecast
 
 /**
  * Created by Matthew on 18/09/2017.

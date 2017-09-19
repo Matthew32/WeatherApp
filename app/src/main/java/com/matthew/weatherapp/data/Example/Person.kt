@@ -1,4 +1,4 @@
-package com.matthew.weatherapp.data
+package com.matthew.weatherapp.data.Example
 
 /**
  * Created by Matthew on 15/09/2017.

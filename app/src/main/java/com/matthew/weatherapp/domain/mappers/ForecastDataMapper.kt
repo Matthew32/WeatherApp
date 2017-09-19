@@ -3,8 +3,8 @@ package com.matthew.weatherapp.domain.mappers
 import android.icu.text.DateFormat
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.matthew.weatherapp.data.Forecast
-import com.matthew.weatherapp.data.ResponseClasses
+import com.matthew.weatherapp.data.Example.Forecast
+import com.matthew.weatherapp.data.Server.ResponseClasses
 import com.matthew.weatherapp.domain.model.ForecastList
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -22,7 +22,7 @@ class ForecastDataMapper {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun convertForecastListToDomain(list: List<com.matthew.weatherapp.data.Forecast>): List<ModelForecast> {
+    private fun convertForecastListToDomain(list: List<Forecast>): List<ModelForecast> {
         return list.mapIndexed { i, forecast ->
             val dt = Calendar.getInstance().timeInMillis + TimeUnit.DAYS.toMillis(i.toLong())
 
