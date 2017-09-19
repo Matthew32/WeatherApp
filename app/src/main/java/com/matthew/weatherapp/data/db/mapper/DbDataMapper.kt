@@ -27,7 +27,7 @@ class DbDataMapper {
     }
 
     private fun convertDayToDomain(dayForecast: DayForecast) = with(dayForecast) {
-        Forecast(date.toString(), description, high, low, iconUrl)
+        Forecast(date, description, high, low, iconUrl)
         //val id: Long, val date: String, val description: String, val high: Int, val low: Int, val iconUrl: String
     }
 }
