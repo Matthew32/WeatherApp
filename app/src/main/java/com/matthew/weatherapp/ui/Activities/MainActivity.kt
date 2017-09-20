@@ -1,5 +1,7 @@
 package com.matthew.weatherapp.ui.Activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import com.matthew.weatherapp.data.Server.Request
 import android.support.v7.app.AppCompatActivity
@@ -13,13 +15,16 @@ import com.matthew.weatherapp.domain.model.RequestForecastCommand
 import com.matthew.weatherapp.data.db.ForecastDbHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
+import kotlin.jvm.javaClass;
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var instance: Activity;
     private val items = listOf("Mon 6/23 - Sunny 31/17", "Tue 6/24 - Foggy - 21/8", "Wed 6/25 - Cloudy - 22/17", "Thurs 6/26 - Rainy - 18/11", "Fri 6/27 - Foggy - 21/10", "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18", "Sun 6/29 - Sunny - 20/7")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        instance = this;
         forecastList.layoutManager = LinearLayoutManager(this);
         // forecastList.adapter = ForecastListAdapter(weekForecast);
 
@@ -49,7 +54,10 @@ class MainActivity : AppCompatActivity() {
         doAsync {
             val result = RequestForecastCommand("94043").execute();
             uiThread {
-                forecastList.adapter = ForecastListAdapter(result) { forecast -> toast(forecast.date.toString()) };
+                forecastList.adapter = ForecastListAdapter(result) {
+                    startActivity<DetailActivity>(DetailActivity.ID to it.id,
+                            DetailActivity.CITY_NAME to result.city)
+                };
 
             }
 

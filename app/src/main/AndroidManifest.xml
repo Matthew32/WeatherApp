@@ -3,6 +3,7 @@
     package="com.matthew.weatherapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ui.App"
         android:allowBackup="true"
@@ -14,10 +15,17 @@
         <activity android:name=".ui.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             >
-
+        </activity>
+        <activity
+            android:name=".ui.Activities.DetailActivity"
+            android:parentActivityName=".ui.Activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.matthew.weatherapp.ui.Activities.MainActivity" />
         </activity>
     </application>
 

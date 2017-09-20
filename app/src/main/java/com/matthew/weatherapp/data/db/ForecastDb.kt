@@ -4,11 +4,9 @@ import com.matthew.weatherapp.data.db.mapper.DbDataMapper
 import com.matthew.weatherapp.data.db.model.CityForecast
 import com.matthew.weatherapp.data.db.model.DayForecast
 import com.matthew.weatherapp.data.db.tables.DataTables.*
+import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.ForecastList
-import com.matthew.weatherapp.extensions.clear
-import com.matthew.weatherapp.extensions.parseList
-import com.matthew.weatherapp.extensions.parseOpt
-import com.matthew.weatherapp.extensions.toVarargArray
+import com.matthew.weatherapp.extensions.*
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 
@@ -41,6 +39,13 @@ class ForecastDb(private val forecastDbHelper: ForecastDbHelper = ForecastDbHelp
             insert(CityForecastTable.NAME, *map.toVarargArray())
             dailyForecast.forEach { insert(DayForecastTable.NAME, *it.map.toVarargArray()) }
         }
+    }
+
+    fun requestDayForecast(id: Long): Forecast? = forecastDbHelper.use {
+        val forecast = select(DayForecastTable.NAME).byId(id)
+                .parseOpt { DayForecast(HashMap(it)) }
+        if (forecast != null) dataMapper.convertDayToDomain(forecast) else null;
+
     }
 
 }

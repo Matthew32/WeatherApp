@@ -2,7 +2,7 @@ package com.matthew.weatherapp.domain.datasource
 
 import com.matthew.weatherapp.data.Server.ForecastServer
 import com.matthew.weatherapp.data.db.ForecastDb
-import com.matthew.weatherapp.domain.model.ForecastDataSource
+import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.ForecastList
 import com.matthew.weatherapp.extensions.firstResult
 
@@ -23,6 +23,11 @@ class ForecastProvider(val sources: List<ForecastDataSource> = SOURCES as List<F
         return if (res != null && res.size >= days) res else null
     }
 
+    fun requestForecast(id: Long): Forecast = requestToSources {
+        it.requestDayForecast(id)
+    }
+
+    private fun <T : Any> requestToSources(f: (ForecastDataSource) -> T?): T = sources.firstResult { f(it) }
     private fun todayTimeSpan() = System.currentTimeMillis() / DAY_IN_MILLIS * DAY_IN_MILLIS
 }
 
