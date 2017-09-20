@@ -1,5 +1,6 @@
 package com.matthew.weatherapp.ui.Activities
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -14,6 +15,7 @@ import com.matthew.weatherapp.R
 //import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
 import com.matthew.weatherapp.data.db.ForecastDbHelper
+import com.matthew.weatherapp.extensions.DelegateExtensions
 import com.matthew.weatherapp.ui.utils.ToolbarManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
@@ -21,6 +23,8 @@ import kotlin.jvm.javaClass;
 
 class MainActivity : AppCompatActivity(), ToolbarManager {
     override val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
+    var zipCode: Long by DelegateExtensions.DelegatesExt.preference(this, SettingsActivity.ZIP_CODE, SettingsActivity.DEFAULT_SIZE);
+
     private lateinit var instance: Activity;
     private val items = listOf("Mon 6/23 - Sunny 31/17", "Tue 6/24 - Foggy - 21/8", "Wed 6/25 - Cloudy - 22/17", "Thurs 6/26 - Rainy - 18/11", "Fri 6/27 - Foggy - 21/10", "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18", "Sun 6/29 - Sunny - 20/7")
     @RequiresApi(Build.VERSION_CODES.N)
@@ -89,11 +93,34 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
         }
     }
 
-//    fun toast(message: String, length: Int = Toast.LENGTH_SHORT) {
+    //    fun toast(message: String, length: Int = Toast.LENGTH_SHORT) {
 //        Toast.makeText(this, message, length).show();
 //    }
 //
 //    fun niceToast(message: String, tag: String = MainActivity::class.java.simpleName, length: Int = Toast.LENGTH_SHORT) {
 //        Toast.makeText(this, "[$tag]  $message", length).show();
 //    }
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onResume() {
+        super.onResume()
+        loadForecast();
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun loadForecast() = doAsync {
+        val result = RequestForecastCommand(zipCode.toString()).execute();
+        uiThread {
+            val adapter = ForecastListAdapter(result) {
+                startActivity<DetailActivity>(DetailActivity.ID to it.id,
+                        DetailActivity.CITY_NAME to result.city)
+            };
+            forecastList.adapter = adapter;
+            toolbarTitle = "{${result.city} (${result.country})"
+        }
+
+    }
+
+
 }
+

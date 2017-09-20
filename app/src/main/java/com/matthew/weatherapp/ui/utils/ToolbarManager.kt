@@ -6,7 +6,9 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.matthew.weatherapp.R
 import com.matthew.weatherapp.extensions.ctx
+import com.matthew.weatherapp.ui.Activities.SettingsActivity
 import com.matthew.weatherapp.ui.App
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 /**
@@ -28,7 +30,7 @@ interface ToolbarManager {
         toolbar.inflateMenu(R.menu.menu_main)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_settings -> App.instance.toast("Setings")
+                R.id.action_settings -> toolbar.ctx.startActivity<SettingsActivity>()
                 else -> App.instance.toast("Unkown caption")
             }
             true

@@ -1,5 +1,8 @@
 package com.matthew.weatherapp.extensions
 
+import android.content.Context
+import com.matthew.weatherapp.ui.utils.LongPreference
+import com.matthew.weatherapp.ui.utils.Preference
 import kotlin.reflect.KProperty
 
 /**
@@ -8,6 +11,7 @@ import kotlin.reflect.KProperty
 class DelegateExtensions {
     object DelegatesExt {
         fun <T> notNullSingleValue() = NotNullSingleValueVar<T>()
+        fun <T> preference(context: Context, name: String, default: T) = Preference(context, name, default);
     }
 
     class NotNullSingleValueVar<T> {
