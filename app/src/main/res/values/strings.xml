@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WeatherApp</string>
     <string name="urlExample">http://openweathermap.org</string>
+    <string name="settings">options</string>
 </resources>
