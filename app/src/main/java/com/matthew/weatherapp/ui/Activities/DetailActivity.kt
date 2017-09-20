@@ -18,6 +18,10 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.forecast_list.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.ctx
 import org.jetbrains.anko.find
 import java.text.DateFormat
@@ -44,6 +48,16 @@ class DetailActivity : AppCompatActivity(), ToolbarManager {
             }
 
         }
+        val ref = asReference();
+        val id = intent.getLongExtra(ID, -1);
+        async(UI) {
+            val result = bg {
+                RequestDayForecastCommand(id).execute()
+
+            }
+            ref().bindForecast(result.await())
+        }
+
     }
 
     private fun bindForecast(forecast: Forecast) = with(forecast) {

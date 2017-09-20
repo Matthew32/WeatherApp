@@ -15,10 +15,14 @@ import com.matthew.weatherapp.R
 //import com.matthew.weatherapp.domain.model.Forecast
 import com.matthew.weatherapp.domain.model.RequestForecastCommand
 import com.matthew.weatherapp.data.db.ForecastDbHelper
+import com.matthew.weatherapp.domain.model.ForecastList
 import com.matthew.weatherapp.extensions.DelegateExtensions
 import com.matthew.weatherapp.ui.utils.ToolbarManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.*
+import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
 import kotlin.jvm.javaClass;
 
 class MainActivity : AppCompatActivity(), ToolbarManager {
@@ -108,17 +112,31 @@ class MainActivity : AppCompatActivity(), ToolbarManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun loadForecast() = doAsync {
-        val result = RequestForecastCommand(zipCode.toString()).execute();
-        uiThread {
-            val adapter = ForecastListAdapter(result) {
-                startActivity<DetailActivity>(DetailActivity.ID to it.id,
-                        DetailActivity.CITY_NAME to result.city)
-            };
-            forecastList.adapter = adapter;
-            toolbarTitle = "{${result.city} (${result.country})"
+    private fun loadForecast() {
+        val ref = asReference();
+        val localZipCode = zipCode;
+        async(kotlinx.coroutines.experimental.android.UI) {
+            val result = bg { RequestForecastCommand(localZipCode.toString()).execute() }
+            val weekForecast = result.await();
+            ref().updateUI(weekForecast);
         }
+    }
 
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun updateUI(result: ForecastList) {
+        doAsync {
+
+            uiThread {
+                val adapter = ForecastListAdapter(result) {
+                    startActivity<DetailActivity>(DetailActivity.ID to it.id,
+                            DetailActivity.CITY_NAME to result.city)
+                };
+                forecastList.adapter = adapter;
+                toolbarTitle = "{${result.city} (${result.country})"
+            }
+
+        }
     }
 
 
